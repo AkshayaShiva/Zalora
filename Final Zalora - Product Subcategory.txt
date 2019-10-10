@@ -1,0 +1,332 @@
+
+SELECT * FROM Products;
+
+--#Just Checking the Products by Grouping based on the Peoducid
+Select productid,productname, Count(*) as Number_of_transactions_Count From Products T Group by productid;
+
+--#Creating Product Category#
+ALTER TABLE Products
+ADD ProductCategory varchar(255);
+
+---#Inserting Values in Product Query#
+UPDATE Products SET productcategory = 'Bookcases & Library' WHERE productid LIKE '%FUR-BO%';
+UPDATE Products SET productcategory = 'Chairs & Tilters' WHERE productid LIKE '%FUR-CH%';
+UPDATE Products SET productcategory = 'Furniture Accessories' WHERE productid LIKE '%FUR-FU%';
+UPDATE Products SET productcategory = 'Tables & accessories' WHERE productid LIKE '%FUR-TA%';
+UPDATE Products SET productcategory = 'Xerox & Accessories' WHERE productid LIKE '%OFF-PA%';
+UPDATE Products SET productcategory = 'Binders & Accessories' WHERE productid LIKE '%OFF-BI%';
+UPDATE Products SET productcategory = 'Labels & Stickers' WHERE productid LIKE '%OFF-LA%';
+UPDATE Products SET productcategory = 'Storage Items' WHERE productid LIKE '%OFF-ST%';
+UPDATE Products SET productcategory = 'Stationary Items' WHERE productid LIKE '%OFF-AR%';
+UPDATE Products SET productcategory = 'Surge Protector & Refrigerator' WHERE productid LIKE '%OFF-AP%';
+UPDATE Products SET productcategory = 'Envelopes' WHERE productid LIKE '%OFF-EN%';
+UPDATE Products SET productcategory = 'Staples & Clips' WHERE productid LIKE '%OFF-FA%';
+UPDATE Products SET productcategory = 'Scissors & Openers' WHERE productid LIKE '%OFF-SU%';
+UPDATE Products SET productcategory = 'Computer Accessories' WHERE productid LIKE '%TEC-AC%';
+UPDATE Products SET productcategory = 'Phone & Accessories' WHERE productid LIKE '%TEC-PH%';
+UPDATE Products SET productcategory = 'Copier' WHERE productid LIKE '%TEC-CO%';
+UPDATE Products SET productcategory = 'Printer & Accessories' WHERE productid LIKE '%TEC-MA%';
+--SELECT * FROM Products;
+--#Checking the No.of Transaction CATEGORY wise#3
+Select productcategory,Count(*) as Number_of_transactions_Count From Products T Group by productcategory;
+--#Create Product Sub Category#
+ALTER TABLE Products
+ADD ProductSubCategory varchar(255);
+--SELECT COUNT(*) FROM Products;
+--#Create Product Sub Category Values##
+UPDATE Products SET productsubcategory = 'Bookcases' WHERE productcategory = 'Bookcases & Library' AND productname LIKE '%Bookcase%';
+UPDATE Products SET productsubcategory = 'Library' WHERE productcategory = 'Bookcases & Library' AND productname LIKE '%Libra%'; 
+UPDATE Products SET productsubcategory = 'Chairs' WHERE productcategory = 'Chairs & Tilters';
+UPDATE Products SET productsubcategory = 'Desk' WHERE productcategory = 'Furniture Accessories' AND productname LIKE '%Desk%';
+UPDATE Products SET productsubcategory = 'Clocks' WHERE productcategory = 'Furniture Accessories' AND productname LIKE '%Clock%';
+UPDATE Products SET productsubcategory = 'Mats' WHERE productcategory = 'Furniture Accessories' AND productname LIKE '%Mat%';
+UPDATE Products SET productsubcategory = 'Lights' WHERE productcategory = 'Furniture Accessories' AND productname LIKE '%Lamp%' OR '%Bulb%';
+UPDATE Products SET productsubcategory = 'Trays' WHERE productcategory = 'Furniture Accessories' AND productname LIKE '%Tray%';
+UPDATE Products SET productsubcategory = 'Frames' WHERE productcategory = 'Furniture Accessories' AND productname LIKE '%Frame%' AND productsubcategory IS NULL;
+UPDATE Products SET productsubcategory = 'Adhesives' WHERE productcategory = 'Furniture Accessories' AND productname LIKE '%Adhesiv%';
+UPDATE Products SET productsubcategory = 'DoorAccesories' WHERE productcategory = 'Furniture Accessories' AND productname LIKE '%Door%';
+UPDATE Products SET productsubcategory = 'WallHangings' WHERE productcategory = 'Furniture Accessories' AND productname LIKE '%Hangi%';
+UPDATE Products SET productsubcategory = 'Lights' WHERE productcategory = 'Furniture Accessories' AND productname LIKE '%Bulbs%' OR '%Fluoresce%';
+UPDATE Products SET productsubcategory = 'Hangers' WHERE productcategory = 'Furniture Accessories' AND productname LIKE '%Hanger%';
+UPDATE Products SET productsubcategory = 'Lights' WHERE productcategory = 'Furniture Accessories' AND productname LIKE '%Fluoresce%';
+UPDATE Products SET productsubcategory = 'OtherRoomFurnitures' WHERE productcategory = 'Furniture Accessories' AND productsubcategory ISNULL;
+UPDATE Products SET productsubcategory = 'TableAccessories' WHERE productcategory =  'Tables & accessories' AND productname LIKE '%Top%';
+UPDATE Products SET productsubcategory = 'Tables' WHERE productcategory = 'Tables & accessories' AND productname LIKE '%Table%' AND productsubcategory IS NULL;
+UPDATE Products SET productsubcategory = 'Tables' WHERE productcategory = 'Tables & accessories' AND productname LIKE '%SAFCO%';
+UPDATE Products SET productsubcategory = 'Tables' WHERE productcategory = 'Tables & accessories' AND productname LIKE '%Bretf%';
+UPDATE Products SET productsubcategory = 'Xerox' WHERE productcategory = 'Xerox & Accessories' AND productname LIKE '%Xerox%';
+UPDATE Products SET productsubcategory = 'XeroxPapers' WHERE productcategory = 'Xerox & Accessories' AND productname LIKE '%Paper%';
+UPDATE Products SET productsubcategory = 'XeroxPapers' WHERE productcategory = 'Xerox & Accessories' AND productname LIKE '%Sheet%';
+UPDATE Products SET productsubcategory = 'XeroxPapers' WHERE productcategory = 'Xerox & Accessories' AND productname LIKE '%Note%';
+UPDATE Products SET productsubcategory = 'InkjetCards' WHERE productcategory = 'Xerox & Accessories' AND productname LIKE '%Card%';
+UPDATE Products SET productsubcategory = 'XeroxPapers' WHERE productcategory = 'Xerox & Accessories' AND productname LIKE '%Note%';
+UPDATE Products SET productsubcategory = 'XeroxPapers' WHERE productcategory = 'Xerox & Accessories' AND productname LIKE '%Envel%';
+UPDATE Products SET productsubcategory = 'XeroxPapers' WHERE productcategory = 'Xerox & Accessories' AND productsubcategory ISNULL;
+UPDATE Products SET productsubcategory = 'TelephoneBooks' WHERE productcategory = 'Xerox & Accessories' AND productname LIKE '%Book%';
+UPDATE Products SET productsubcategory = 'Notepads' WHERE productcategory = 'Xerox & Accessories' AND productname LIKE '%Pad%'AND productsubcategory IS NULL;
+UPDATE Products SET productsubcategory = 'Binders' WHERE productcategory = 'Binders & Accessories' AND productname LIKE '%Binder%';
+UPDATE Products SET productsubcategory = 'Binders' WHERE productcategory = 'Binders & Accessories' AND productname LIKE '%Machine%';
+UPDATE Products SET productsubcategory = 'BindingAccessories' WHERE productcategory = 'Binders & Accessories' AND productsubcategory ISNULL;
+UPDATE Products SET productsubcategory = 'Labels' WHERE productcategory = 'Labels & Stickers' AND productsubcategory ISNULL;
+UPDATE Products SET productsubcategory = 'StorageBox' WHERE productcategory = 'Storage Items' AND productname LIKE '%Box%';
+UPDATE Products SET productsubcategory = 'StorageBox' WHERE productcategory = 'Storage Items' AND productname LIKE '%File%';
+UPDATE Products SET productsubcategory = 'StorageBox' WHERE productcategory = 'Storage Items' AND productname LIKE '%Tote%';
+UPDATE Products SET productsubcategory = 'MobileCart' WHERE productcategory = 'Storage Items' AND productname LIKE '%Cart%';
+UPDATE Products SET productsubcategory = 'Shelves' WHERE productcategory = 'Storage Items' AND productname LIKE '%Shelv%';
+UPDATE Products SET productsubcategory = 'Drawers' WHERE productcategory = 'Storage Items' AND productname LIKE '%Draw%' and productsubcategory ISNULL;
+UPDATE Products SET productsubcategory = 'Lockers' WHERE productcategory = 'Storage Items' AND productname LIKE '%Lock%';
+UPDATE Products SET productsubcategory = 'Cases' WHERE productcategory = 'Storage Items' AND productname LIKE '%Hold%';
+UPDATE Products SET productsubcategory = 'Cases' WHERE productcategory = 'Storage Items' AND productname LIKE '%Case%';
+UPDATE Products SET productsubcategory = 'Cases' WHERE productcategory = 'Storage Items' AND productname LIKE '%Cube%';
+UPDATE Products SET productsubcategory = 'StapleMagnets' WHERE productcategory = 'Storage Items' AND productname LIKE '%Staple%';
+UPDATE Products SET productsubcategory = 'StorageBox' WHERE productcategory = 'Storage Items' AND productname LIKE '%Storage%';
+UPDATE Products SET productsubcategory = 'StorageBins' WHERE productcategory = 'Storage Items' AND productname LIKE '%Bin%';
+UPDATE Products SET productsubcategory = 'Racks' WHERE productcategory = 'Storage Items' AND productname LIKE '%Rack%';
+UPDATE Products SET productsubcategory = 'Racks' WHERE productcategory = 'Storage Items' AND productname LIKE '%Recyc%';
+UPDATE Products SET productsubcategory = 'MobileCart' WHERE productcategory = 'Storage Items' AND productname LIKE '%Port%';
+UPDATE Products SET productsubcategory = 'Shelves' WHERE productcategory = 'Storage Items' AND productname LIKE '%Shelf%';
+UPDATE Products SET productsubcategory = 'Cases' WHERE productcategory = 'Storage Items' AND productname LIKE '%Crate%';
+UPDATE Products SET productsubcategory = 'Stacks' WHERE productcategory = 'Storage Items' AND productname LIKE '%Stak%';
+UPDATE Products SET productsubcategory = 'ColourPencils' WHERE productcategory = 'Stationary Items' AND productname LIKE '%Colo%';
+UPDATE Products SET productsubcategory = 'ColourPencils' WHERE productcategory = 'Stationary Items' AND productname LIKE '%Newell%';
+UPDATE Products SET productsubcategory = 'Sharpeners' WHERE productcategory = 'Stationary Items' AND productname LIKE '%Sharpen%';
+UPDATE Products SET productsubcategory = 'Pencils' WHERE productcategory = 'Stationary Items' AND productname LIKE '%Penci%'and productsubcategory ISNULL;
+UPDATE Products SET productsubcategory = 'Highlighters' WHERE productcategory = 'Stationary Items' AND productname LIKE '%Highl%';
+UPDATE Products SET productsubcategory = 'Markers' WHERE productcategory = 'Stationary Items' AND productname LIKE '%Mark%';
+UPDATE Products SET productsubcategory = 'Highlighters' WHERE productcategory = 'Stationary Items' AND productname LIKE '%Liner%';
+UPDATE Products SET productsubcategory = 'Crayons' WHERE productcategory = 'Stationary Items' AND productname LIKE '%Crayo%';
+UPDATE Products SET productsubcategory = 'Chalk' WHERE productcategory = 'Stationary Items' AND productname LIKE '%Chalk%';
+UPDATE Products SET productsubcategory = 'PocketClip' WHERE productcategory = 'Stationary Items' AND productname LIKE '%Clip%';
+UPDATE Products SET productsubcategory = 'Racks' WHERE productcategory = 'Stationary Items' AND productname LIKE '%Rack%';
+UPDATE Products SET productsubcategory = 'PencilBox' WHERE productcategory = 'Stationary Items' AND productname LIKE '%Box%';
+UPDATE Products SET productsubcategory = 'Envelopes' WHERE productcategory = 'Envelopes';
+UPDATE Products SET productsubcategory = 'Refrigerators' WHERE productcategory = 'Surge Protector & Refrigerator' AND productname LIKE '%Refri%';
+UPDATE Products SET productsubcategory = 'SurgeDevices' WHERE productcategory = 'Surge Protector & Refrigerator' AND productname LIKE '%Surge%';
+UPDATE Products SET productsubcategory = 'AirCleaner' WHERE productcategory = 'Surge Protector & Refrigerator' AND productname LIKE '%Air%';
+UPDATE Products SET productsubcategory = 'AirCleaner' WHERE productcategory = 'Surge Protector & Refrigerator' AND productname LIKE '%Vacuu%';
+UPDATE Products SET productsubcategory = 'AirCleaner' WHERE productcategory = 'Surge Protector & Refrigerator' AND productname LIKE '%Eurek%';
+UPDATE Products SET productsubcategory = 'Grabber' WHERE productcategory = 'Surge Protector & Refrigerator' AND productname LIKE '%Grab%';
+UPDATE Products SET productsubcategory = 'Holders' WHERE productcategory = 'Surge Protector & Refrigerator' AND productname LIKE '%Hold%';
+UPDATE Products SET productsubcategory = 'AirCleaner' WHERE productcategory = 'Surge Protector & Refrigerator' AND productname LIKE '%Humid%';
+UPDATE Products SET productsubcategory = 'PowerStrip' WHERE productcategory = 'Surge Protector & Refrigerator' AND productname LIKE '%Strip%';
+UPDATE Products SET productsubcategory = 'PowerCenter' WHERE productcategory = 'Surge Protector & Refrigerator' AND productname LIKE '%Center%';
+UPDATE Products SET productsubcategory = 'DustBag' WHERE productcategory = 'Surge Protector & Refrigerator' AND productname LIKE '%Dust%';
+UPDATE Products SET productsubcategory = 'ReplacementBelts' WHERE productcategory = 'Surge Protector & Refrigerator' AND productname LIKE '%Belt%';
+UPDATE Products SET productsubcategory = 'AirCleaner' WHERE productcategory = 'Surge Protector & Refrigerator' AND productname LIKE '%SteamVac%';
+
+UPDATE Products SET productsubcategory = 'Clips' WHERE productcategory = 'Staples & Clips' AND productname LIKE '%Clip%';
+UPDATE Products SET productsubcategory = 'Clamps' WHERE productcategory = 'Staples & Clips' AND productname LIKE '%Clamp%';
+UPDATE Products SET productsubcategory = 'Staples' WHERE productcategory = 'Staples & Clips' AND productname LIKE '%Stapl%';
+UPDATE Products SET productsubcategory = 'RubberBand' WHERE productcategory = 'Staples & Clips' AND productname LIKE '%Band%';
+UPDATE Products SET productsubcategory = 'Pins' WHERE productcategory = 'Staples & Clips' AND productname LIKE '%Pin%';
+UPDATE Products SET productsubcategory = 'Clamps' WHERE productcategory = 'Staples & Clips' AND productname LIKE '%Clasp%';
+UPDATE Products SET productsubcategory = 'Pins' WHERE productcategory = 'Staples & Clips' AND productname LIKE '%Tack%';
+
+UPDATE Products SET productsubcategory = 'Scissors' WHERE productcategory = 'Scissors & Openers' AND productname LIKE '%Sciss%';
+UPDATE Products SET productsubcategory = 'Openers' WHERE productcategory = 'Scissors & Openers' AND productname LIKE '%Opener%';
+UPDATE Products SET productsubcategory = 'Scissors' WHERE productcategory = 'Scissors & Openers' AND productname LIKE '%Shears%';
+UPDATE Products SET productsubcategory = 'Slitter' WHERE productcategory = 'Scissors & Openers' AND productname LIKE '%Slit%';
+UPDATE Products SET productsubcategory = 'StapleRemover' WHERE productcategory = 'Scissors & Openers' AND productname LIKE '%Stapl%';
+
+UPDATE Products SET productsubcategory = 'Keyboard' WHERE productcategory = 'Computer Accessories' AND productname LIKE '%Keyboar%';
+UPDATE Products SET productsubcategory = 'DVD' WHERE productcategory = 'Computer Accessories' AND productname LIKE '%DVD%';
+UPDATE Products SET productsubcategory = 'Mouse' WHERE productcategory = 'Computer Accessories' AND productname LIKE '%Mous%';
+UPDATE Products SET productsubcategory = 'Headset' WHERE productcategory = 'Computer Accessories' AND productname LIKE '%Headset%';
+UPDATE Products SET productsubcategory = 'FlashDrive' WHERE productcategory = 'Computer Accessories' AND productname LIKE '%Flash%';
+UPDATE Products SET productsubcategory = 'MemoryCard' WHERE productcategory = 'Computer Accessories' AND productname LIKE '%Memory%';
+UPDATE Products SET productsubcategory = 'TravelDrive' WHERE productcategory = 'Computer Accessories' AND productname LIKE '%Travel%';
+UPDATE Products SET productsubcategory = 'Pinpad' WHERE productcategory = 'Computer Accessories' AND productname LIKE '%Pinpad%';
+UPDATE Products SET productsubcategory = 'Pinpad' WHERE productcategory = 'Computer Accessories' AND productname LIKE '%PIN%';
+UPDATE Products SET productsubcategory = 'Pinpad' WHERE productcategory = 'Computer Accessories' AND productname LIKE '%Keypad%';
+UPDATE Products SET productsubcategory = 'MobilePhone' WHERE productcategory = 'Computer Accessories' AND productname LIKE '%Phon%';
+UPDATE Products SET productsubcategory = 'Router' WHERE productcategory = 'Computer Accessories' AND productname LIKE '%Router%';
+UPDATE Products SET productsubcategory = 'BluRayDisc' WHERE productcategory = 'Computer Accessories' AND productname LIKE '%Blu%';
+UPDATE Products SET productsubcategory = 'USB' WHERE productcategory = 'Computer Accessories' AND productname LIKE '%USB%';
+UPDATE Products SET productsubcategory = 'Ultrium' WHERE productcategory = 'Computer Accessories' AND productname LIKE '%Ultri%';
+UPDATE Products SET productsubcategory = 'HardDrive' WHERE productcategory = 'Computer Accessories' AND productname LIKE '%Hard%';
+UPDATE Products SET productsubcategory = 'Speaker' WHERE productcategory = 'Computer Accessories' AND productname LIKE '%Speaker%';
+UPDATE Products SET productsubcategory = 'CD' WHERE productcategory = 'Computer Accessories' AND productname LIKE '%CD%';
+UPDATE Products SET productsubcategory = 'Cartridge' WHERE productcategory = 'Computer Accessories' AND productname LIKE '%Cart%';
+UPDATE Products SET productsubcategory = 'MobileTrackball' WHERE productcategory = 'Computer Accessories' AND productname LIKE '%Track%';
+
+UPDATE Products SET productsubcategory = 'LandlinePhones' WHERE productcategory = 'Phone & Accessories' AND productname LIKE '%Phone%';
+UPDATE Products SET productsubcategory = 'LandlinePhones' WHERE productcategory = 'Phone & Accessories' AND productname LIKE '%AT&%';
+UPDATE Products SET productsubcategory = 'MobileCase' WHERE productcategory = 'Phone & Accessories' AND productname LIKE '%Case%';
+UPDATE Products SET productsubcategory = 'MobileCase' WHERE productcategory = 'Phone & Accessories' AND productname LIKE '%Shocksock%';
+UPDATE Products SET productsubcategory = 'Headset' WHERE productcategory = 'Phone & Accessories' AND productname LIKE '%Headset%';
+UPDATE Products SET productsubcategory = 'Headset' WHERE productcategory = 'Phone & Accessories' AND productname LIKE '%Earpod%';
+UPDATE Products SET productsubcategory = 'Headset' WHERE productcategory = 'Phone & Accessories' AND productname LIKE '%Plantro%';
+UPDATE Products SET productsubcategory = 'CarMount' WHERE productcategory = 'Phone & Accessories' AND productname LIKE '%Mount%';
+UPDATE Products SET productsubcategory = 'Megaphone' WHERE productcategory = 'Phone & Accessories' AND productname LIKE '%Pyle%';
+UPDATE Products SET productsubcategory = 'Router' WHERE productcategory = 'Phone & Accessories' AND productname LIKE '%Router%';
+UPDATE Products SET productsubcategory = 'HandsetLifter' WHERE productcategory = 'Phone & Accessories' AND productname LIKE '%Lifter%';
+UPDATE Products SET productsubcategory = 'Speaker' WHERE productcategory = 'Phone & Accessories' AND productname LIKE '%Speaker%';
+UPDATE Products SET productsubcategory = 'Speaker' WHERE productcategory = 'Phone & Accessories' AND productname LIKE '%JAB%';
+UPDATE Products SET productsubcategory = 'ScreenProtector' WHERE productcategory = 'Phone & Accessories' AND productname LIKE '%Protector%';
+UPDATE Products SET productsubcategory = 'Charger' WHERE productcategory = 'Phone & Accessories' AND productname LIKE '%Charg%';
+UPDATE Products SET productsubcategory = 'CardReader' WHERE productcategory = 'Phone & Accessories' AND productname LIKE '%Reader%';
+UPDATE Products SET productsubcategory = 'SignalBooster' WHERE productcategory = 'Phone & Accessories' AND productname LIKE '%Boost%';
+UPDATE Products SET productsubcategory = 'PowerBank' WHERE productcategory = 'Phone & Accessories' AND productname LIKE '%Power%';
+UPDATE Products SET productsubcategory = 'LandlinePhone' WHERE productcategory = 'Phone & Accessories' AND productname LIKE '%GE %';
+UPDATE Products SET productsubcategory = 'LandlinePhone' WHERE productcategory = 'Phone & Accessories' AND productname LIKE '%Vtech%';
+UPDATE Products SET productsubcategory = 'LandlinePhone' WHERE productcategory = 'Phone & Accessories' AND productname LIKE '%Panason%';
+UPDATE Products SET productsubcategory = 'LandlinePhone' WHERE productcategory = 'Phone & Accessories' AND productname LIKE '%Handset%';
+UPDATE Products SET productsubcategory = 'FMRadio' WHERE productcategory = 'Phone & Accessories' AND productname LIKE '%iHome%';
+UPDATE Products SET productsubcategory = 'MobilePhone' WHERE productcategory = 'Phone & Accessories' AND productname LIKE '%Nokia%';
+UPDATE Products SET productsubcategory = 'MobilePhone' WHERE productcategory = 'Phone & Accessories' AND productname LIKE '%Motorol%';
+UPDATE Products SET productsubcategory = 'MobilePhone' WHERE productcategory = 'Phone & Accessories' AND productname LIKE '%Samsung%';
+UPDATE Products SET productsubcategory = 'MobilePhone' WHERE productcategory = 'Phone & Accessories' AND productname LIKE '%LG %';
+UPDATE Products SET productsubcategory = 'MobilePhone' WHERE productcategory = 'Phone & Accessories' AND productname LIKE '%Google%';
+UPDATE Products SET productsubcategory = 'MobilePhone' WHERE productcategory = 'Phone & Accessories' AND productname LIKE '%iPhon%';
+UPDATE Products SET productsubcategory = 'MobilePhone' WHERE productcategory = 'Phone & Accessories' AND productname LIKE '%Blackber%';
+UPDATE Products SET productsubcategory = 'MobilePhone' WHERE productcategory = 'Phone & Accessories' AND productname LIKE '%HTC%';
+UPDATE Products SET productsubcategory = 'LandlinePhone' WHERE productcategory = 'Phone & Accessories' AND productname LIKE '%Clearsou%';
+UPDATE Products SET productsubcategory = 'LandlinePhone' WHERE productcategory = 'Phone & Accessories' AND productname LIKE '%Clari%';
+UPDATE Products SET productsubcategory = 'MobilePhone' WHERE productcategory = 'Phone & Accessories' AND productname LIKE '%Xiaomi%';
+UPDATE Products SET productsubcategory = 'MobileStand' WHERE productcategory = 'Phone & Accessories' AND productname LIKE '%Stand%';
+UPDATE Products SET productsubcategory = 'LandlinePhone' WHERE productcategory = 'Phone & Accessories' AND productname LIKE '%Adtran%';
+UPDATE Products SET productsubcategory = 'LandlinePhone' WHERE productcategory = 'Phone & Accessories' AND productname LIKE '%Cisco%';
+UPDATE Products SET productsubcategory = 'LandlinePhone' WHERE productcategory = 'Phone & Accessories' AND productname LIKE '%Nortel%';
+UPDATE Products SET productsubcategory = 'AudioCable' WHERE productcategory = 'Phone & Accessories' AND productname LIKE '%Griffin%';
+UPDATE Products SET productsubcategory = 'LandlinePhones' WHERE productsubcategory = 'LandlinePhone'; 
+
+UPDATE Products SET productsubcategory = 'Copiers' WHERE productcategory = 'Copier';
+UPDATE Products SET productsubcategory = 'Copiers' WHERE productsubcategory = 'Copier';
+UPDATE Products SET productsubcategory = 'Scissors' where productcategory = 'Scissors & Openers' and productsubcategory ISNULL;
+UPDATE Products SET productsubcategory = 'Printers' WHERE productcategory = 'Printer & Accessories' AND productname LIKE '%Printer%';
+UPDATE Products SET productsubcategory = 'LandlinePhone' WHERE productcategory = 'Printer & Accessories' AND productname LIKE '%Phone%';
+UPDATE Products SET productsubcategory = 'Calculator' WHERE productcategory = 'Printer & Accessories' AND productname LIKE '%Calculator%';
+UPDATE Products SET productsubcategory = 'Shredder' WHERE productcategory = 'Printer & Accessories' AND productname LIKE '%Shredder%';
+UPDATE Products SET productsubcategory = 'Scanner' WHERE productcategory = 'Printer & Accessories' AND productname LIKE '%Scanner%';
+UPDATE Products SET productsubcategory = 'CardReader' WHERE productcategory = 'Printer & Accessories' AND productname LIKE '%Reader%';
+UPDATE Products SET productsubcategory = 'Copier' WHERE productcategory = 'Printer & Accessories' AND productname LIKE '%Copie%' AND productsubcategory ISNULL;
+UPDATE Products SET productsubcategory = 'Headset' WHERE productcategory = 'Printer & Accessories' AND productname LIKE '%Headset%';
+UPDATE Products SET productsubcategory = 'Server' WHERE productcategory = 'Printer & Accessories' AND productname LIKE '%Server%';
+UPDATE Products SET productsubcategory = 'EthernetKit' WHERE productcategory = 'Printer & Accessories' AND productname LIKE '%kit%';
+UPDATE Products SET productsubcategory = 'VCUnit' WHERE productcategory = 'Printer & Accessories' AND productname LIKE '%Unit%';
+
+--#Checking if all the ProductSubcategories are Updated--
+SELECT * FROM Products WHERE productsubcategory ISNULL;
+
+
+
+---#Create tABLE ProductsTransaction and Store Details of Product Transactions#-------
+Create table ProductsTransaction AS
+Select productsubcategory, Count(*) as TRANSACTIONS From Products T Group by productsubcategory
+order by TRANSACTIONS DESC;
+
+
+
+--#Definition of Support#
+--Support of an item or item set is the fraction of total transactions in our dataset that contain that item or item set.
+-- Ex.Support of the Product Sugar = No.of Transactions Sugar was bought in/Total.No.of Transactions
+
+--#Add New Column Support in Product Transaction##
+ALTER TABLE ProductsTransaction
+ADD COLUMN SUPPORT FLOAT;
+---Total No.of Transaction = 9994
+UPDATE ProductsTransaction SET support = CAST (transactions AS FLOAT) / 9994;
+SELECT * from ProductsTransaction ;
+
+
+--#Create a Table and Store the TOP 10 Product With Highest Transactions#
+Create TABLE TopTenProducts AS
+select * from ProductsTransaction LIMIT 10;
+--#Create Table and Store Transaction Details of Products bought Together##
+
+CREATE TABLE Together_Transaction AS
+SELECT PRODUCT_A,
+PRODUCT_B,
+COUNT(customerid) OCCURRENCES
+FROM
+(
+SELECT DISTINCT
+a.customerid,
+a.productsubcategory PRODUCT_A,
+b.productsubcategory PRODUCT_B,
+b.customerid
+FROM Products a,
+Products b
+WHERE a.customerid=b.customerid
+and a.productsubcategory <> b.productsubcategory
+)
+GROUP BY PRODUCT_A,PRODUCT_B;
+
+
+
+--Inner Join On TogetherTransaction And TopTenProducts#
+CREATE TABLE RESULT as
+SELECT product_a,product_b,occurrences,TopTenProducts.support as SUPPORT_A
+FROM Together_Transaction
+INNER JOIN TopTenProducts
+ON Together_Transaction.product_a = TopTenProducts.productsubcategory;
+
+
+--#Add New Column Support_AB in Result##
+ALTER TABLE result
+ADD COLUMN SUPPORT_AB FLOAT;
+---Total No.of Transaction = 9994
+UPDATE result SET SUPPORT_AB = CAST (occurrences AS FLOAT) / 9994;
+SELECT * from result ;
+
+---Combine the Tables ProductsTransaction with Result and create a new table---
+CREATE TABLE FINAL_RESULT AS
+SELECT product_a,product_b,occurrences,result.SUPPORT_A,result.SUPPORT_AB,ProductsTransaction.SUPPORT AS SUPPORT_B
+FROM result
+INNER JOIN ProductsTransaction
+ON result.product_b = ProductsTransaction.productsubcategory
+ORDER by support_ab DESC,product_a ASC,product_b asc;
+
+--Create Columns Confidence
+--- Confidence is defined as the ratio of the probability of occurrence of the favorable event to the probability of the occurrence of the antecedent.
+--- Ex.When there are 2 products Curd and Milk, the probability of Curd being bought along  with Milk,whenever the milk is bought is defined as Confidence.
+ALTER TABLE FINAL_RESULT
+ADD COLUMN CONFIDENCE float;
+
+
+--Calculate the Value of Confidence
+update FINAL_RESULT set confidence = Cast (support_ab AS Float) / Cast (support_a AS Float);
+--Create Column Lift Ratio---
+
+--Lift is the ratio of Confidence to Expected Confidence. In the area of association rules - A lift ratio larger than 1.0 implies that the relationship between the antecedent 
+--and the consequent is more significant than would be expected if the two sets were independent. The larger the lift ratio, the more significant the association.
+--Ex.When there are 2 products Curd and Milk,the Support of Milk and Curd over the Support of Milk and Curd independently gives the Lift Ratio.
+-- Lift Ratio = Support of Curd and Milk/ (Support of Curd).( Support of Milk) 
+
+alter TABLE FINAL_RESULT
+add column LIFT_RATIO FLOAT;
+
+--Calculate the Value of Lift_Ratio
+
+update FINAL_RESULT set lift_ratio = Cast (confidence AS Float) / Cast (support_b AS Float);
+
+
+---Remove duplicate pairs
+
+DELETE FROM FINAL_RESULT as t1 WHERE
+  EXISTS (SELECT * FROM FINAL_RESULT as t2 WHERE t2.product_a = t1.product_b AND t2.product_b = t1.product_a AND t1.product_a > t2.product_a);
+
+--# Create End_Result Table----#
+
+CREATE TABLE END_RESULT AS
+SELECT product_a,product_b,occurrences,support_ab AS SUPPORT,confidence,lift_ratio FROM FINAL_RESULT
+ORDER BY support_ab DESC,product_a ASC,product_b ASC;
+
+---Select Data based on the Conditions -----
+
+
+SELECT * FROM END_RESULT where support >= 0.2 and confidence >= 0.6 and lift_ratio >1;
+
+---No Data was Fetched based on the Product Sub-Category Results as the maximum value of support was 0.03 and max value of confidence was 0.54--
+
+
+
+
+
+
+
+
+
+
+
+

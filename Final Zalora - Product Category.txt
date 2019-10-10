@@ -1,0 +1,154 @@
+
+
+--# Since the value of Support was very less in the Product Sub Category, tried categorising the products into More Narrower Product Categories and do the analysis #---
+SELECT * FROM Products;
+
+--#Just Checking the Products by Grouping based on the Producid
+Select productid,productname, Count(*) as Number_of_transactions_Count From Products T Group by productid;
+
+--#Creating Product Category#
+ALTER TABLE Products
+ADD ProductCategory varchar(255);
+
+---#Inserting Values in Product Query#
+
+UPDATE Products SET productcategory = 'Furniture Accessories' WHERE productid LIKE '%FUR-%';
+UPDATE Products SET productcategory = 'Xerox & Accessories' WHERE productid LIKE '%OFF-PA%';
+UPDATE Products SET productcategory = 'Binders & Accessories' WHERE productid LIKE '%OFF-BI%';
+UPDATE Products SET productcategory = 'Labels & Stickers' WHERE productid LIKE '%OFF-LA%';
+UPDATE Products SET productcategory = 'Storage Items' WHERE productid LIKE '%OFF-ST%';
+UPDATE Products SET productcategory = 'Stationary Items' WHERE productid LIKE '%OFF-AR%';
+UPDATE Products SET productcategory = 'Surge Protector & Refrigerator' WHERE productid LIKE '%OFF-AP%';
+UPDATE Products SET productcategory = 'Envelopes' WHERE productid LIKE '%OFF-EN%';
+UPDATE Products SET productcategory = 'Staples & Clips' WHERE productid LIKE '%OFF-FA%';
+UPDATE Products SET productcategory = 'Scissors & Openers' WHERE productid LIKE '%OFF-SU%';
+UPDATE Products SET productcategory = 'Computer Accessories' WHERE productid LIKE '%TEC-AC%';
+UPDATE Products SET productcategory = 'Phone & Accessories' WHERE productid LIKE '%TEC-PH%';
+UPDATE Products SET productcategory = 'Printer & Accessories' WHERE productid LIKE '%TEC-MA%'; 
+UPDATE Products SET productcategory = 'Xerox & Accessories' WHERE productid LIKE '%TEC-CO%';
+
+
+
+---#Create tABLE ProductsTransaction and Store Details of Product Transactions#-------
+Create table ProductsTransaction AS
+Select productcategory, Count(*) as TRANSACTIONS From Products T Group by productcategory
+order by TRANSACTIONS DESC;
+
+--#Definition of Support#
+--Support of an item or item set is the fraction of total transactions in our dataset that contain that item or item set.
+-- Ex.Support of the Product Sugar = No.of Transactions Sugar was bought in/Total.No.of Transactions
+
+--#Add New Column Support in Product Transaction##
+ALTER TABLE ProductsTransaction
+ADD COLUMN SUPPORT FLOAT;
+---Total No.of Transaction = 9994
+UPDATE ProductsTransaction SET support = CAST (transactions AS FLOAT) / 9994;
+SELECT * from ProductsTransaction ;
+
+
+--#Create a Table and Store the TOP 10 Product With Highest Transactions#
+Create TABLE TopTenProducts AS
+select * from ProductsTransaction LIMIT 10;
+--#Create Table and Store Transaction Details of Products bought Together##
+
+CREATE TABLE Together_Transaction AS
+SELECT PRODUCT_A,
+PRODUCT_B,
+COUNT(customerid) OCCURRENCES
+FROM
+(
+SELECT DISTINCT
+a.customerid,
+a.productcategory PRODUCT_A,
+b.productcategory PRODUCT_B,
+b.customerid
+FROM Products a,
+Products b
+WHERE a.customerid=b.customerid
+and a.productcategory <> b.productcategory
+)
+GROUP BY PRODUCT_A,PRODUCT_B;
+
+--Inner Join On TogetherTransaction And TopTenProducts#
+CREATE TABLE RESULT as
+SELECT product_a,product_b,occurrences,TopTenProducts.support as SUPPORT_A
+FROM Together_Transaction
+INNER JOIN TopTenProducts
+ON Together_Transaction.product_a = TopTenProducts.productcategory;
+
+
+--#Add New Column Support_AB in Result##
+ALTER TABLE result
+ADD COLUMN SUPPORT_AB FLOAT;
+---Total No.of Transaction = 9994
+UPDATE result SET SUPPORT_AB = CAST (occurrences AS FLOAT) / 9994;
+SELECT * from result ;
+
+---Combine the Tables ProductsTransaction with Result and create a new table---
+CREATE TABLE FINAL_RESULT AS
+SELECT product_a,product_b,occurrences,result.SUPPORT_A,result.SUPPORT_AB,ProductsTransaction.SUPPORT AS SUPPORT_B
+FROM result
+INNER JOIN ProductsTransaction
+ON result.product_b = ProductsTransaction.productcategory
+ORDER by support_ab DESC,product_a ASC,product_b asc;
+
+--Create ColumnConfidence 
+--- Confidence is defined as the ratio of the probability of occurrence of the favorable event to the probability of the occurrence of the antecedent.
+--- Ex.When there are 2 products Curd and Milk, the probability of Curd being bought along  with Milk,whenever the milk is bought is defined as Confidence.
+
+ALTER TABLE FINAL_RESULT
+ADD COLUMN CONFIDENCE float;
+
+--Calculate the Value of Confidence
+update FINAL_RESULT set confidence = Cast (support_ab AS Float) / Cast (support_a AS Float);
+
+--Create Column Lift Ratio---
+
+
+--Lift is the ratio of Confidence to Expected Confidence. In the area of association rules - A lift ratio larger than 1.0 implies that the relationship between the antecedent 
+--and the consequent is more significant than would be expected if the two sets were independent. The larger the lift ratio, the more significant the association.
+--Ex.When there are 2 products Curd and Milk,the Support of Milk and Curd over the Support of Milk and Curd independently gives the Lift Ratio.
+-- Lift Ratio = Support of Curd and Milk/ (Support of Curd).( Support of Milk) 
+
+--Create Column Lift Ratio---
+
+alter TABLE FINAL_RESULT
+add column LIFT_RATIO FLOAT;
+
+
+--Calculate the Value of Lift_Ratio
+update FINAL_RESULT set lift_ratio = Cast (confidence AS Float) / Cast (support_b AS Float);
+
+
+---Remove duplicate pairs
+
+DELETE FROM FINAL_RESULT as t1 WHERE
+  EXISTS (SELECT * FROM FINAL_RESULT as t2 WHERE t2.product_a = t1.product_b AND t2.product_b = t1.product_a AND t1.product_a > t2.product_a);
+
+--# Create End_Result Table----#
+
+CREATE TABLE END_RESULT AS
+SELECT product_a,product_b,occurrences,support_ab AS SUPPORT,confidence,lift_ratio FROM FINAL_RESULT
+ORDER BY support_ab DESC,product_a ASC,product_b ASC;
+
+---Select Data based on the Conditions -----
+
+
+SELECT * FROM END_RESULT where support >= 0.2 and confidence >= 0.6 and lift_ratio >1;
+
+---No Data was Fetched based on the Product Sub-Category Results as the maximum value of support was 0.04 and max value of confidence was 0.54--
+
+
+SELECT * FROM END_RESULT where confidence >= 0.6 and lift_ratio >1;
+--#We got four Results for this condition and it is attached in Excel file End_Result based on Product CategoryCondition
+.xlsx --- 
+
+
+
+
+
+
+
+
+
+
